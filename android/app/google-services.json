@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "448798247434",
+    "project_id": "seventh-abacus-413008",
+    "storage_bucket": "seventh-abacus-413008.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448798247434:android:442ae172c5de95cd742df3",
+        "android_client_info": {
+          "package_name": "com.example.demoo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyjU38gBv0qyWo4b0it7VHRWVed2sItYo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448798247434:android:5396f34f4076ea36742df3",
+        "android_client_info": {
+          "package_name": "com.example.my_project1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyjU38gBv0qyWo4b0it7VHRWVed2sItYo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
