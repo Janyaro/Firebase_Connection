@@ -4,7 +4,12 @@ import 'package:flutter/widgets.dart';
 class ReUseBtn extends StatelessWidget {
   final String btnTitle;
   final VoidCallback ontap;
-  const ReUseBtn({super.key, required this.btnTitle, required this.ontap});
+  final bool loading;
+  const ReUseBtn(
+      {super.key,
+      required this.btnTitle,
+      this.loading = false,
+      required this.ontap});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +21,15 @@ class ReUseBtn extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), color: Colors.deepPurple),
         child: Center(
-            child: Text(
-          btnTitle,
-          style: const TextStyle(fontSize: 18, color: Colors.white),
-        )),
+            child: loading
+                ? CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 3,
+                  )
+                : Text(
+                    btnTitle,
+                    style: const TextStyle(fontSize: 18, color: Colors.white),
+                  )),
       ),
     );
   }
