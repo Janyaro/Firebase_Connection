@@ -41,11 +41,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                    hintText: 'Enter Name', border: OutlineInputBorder()),
-              ),
               const SizedBox(
                 height: 30,
               ),
@@ -56,12 +51,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     setState(() {
                       isLoading = true;
                     });
-                    databaseRer
-                        .child(DateTime.now().microsecondsSinceEpoch.toString())
-                        .child('commit')
-                        .set({
+                    String id =
+                        DateTime.now().microsecondsSinceEpoch.toString();
+                    databaseRer.child(id).set({
                       'title': postController.text.toString(),
-                      'name': nameController.text.toString()
+                      'id': id
                     }).then((value) {
                       setState(() {
                         isLoading = false;
