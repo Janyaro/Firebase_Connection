@@ -90,6 +90,7 @@ class _PostScreenState extends State<PostScreen> {
                                   PopupMenuItem(
                                       child: ListTile(
                                     onTap: () {
+                                      Navigator.pop(context);
                                       ShowMyDialog(title, id);
                                     },
                                     leading: const Icon(Icons.edit),
@@ -97,6 +98,10 @@ class _PostScreenState extends State<PostScreen> {
                                   )),
                                   PopupMenuItem(
                                       child: ListTile(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      ref.child(id).remove();
+                                    },
                                     leading: Icon(Icons.delete),
                                     title: Text('Delete'),
                                   ))
