@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_project1/Screen/Authentication/loginScreen.dart';
 import 'package:my_project1/Screen/Post/post_screen.dart';
+import 'package:my_project1/fireStore/fireStore_list.dart';
 
 class SplashServices {
   void isLogin(BuildContext context) {
@@ -15,12 +16,29 @@ class SplashServices {
       Timer(
           Duration(seconds: 3),
           () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => PostScreen())));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const FireStoreScreen())));
     } else {
       Timer(
           Duration(seconds: 3),
           () => Navigator.push(
               context, MaterialPageRoute(builder: (context) => LoginScreen())));
     }
+  }
+
+  Future<void> showMyDialog(BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Update Text'),
+            content: TextField(),
+            actions: [
+              TextButton(onPressed: () {}, child: Text('Cancel')),
+              TextButton(onPressed: () {}, child: Text('Ok'))
+            ],
+          );
+        });
   }
 }
