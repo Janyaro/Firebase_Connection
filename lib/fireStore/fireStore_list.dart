@@ -15,6 +15,8 @@ class FireStoreScreen extends StatefulWidget {
 class _FireStoreScreenState extends State<FireStoreScreen> {
   final _auth = FirebaseAuth.instance;
   final fireStore = FirebaseFirestore.instance.collection('user').snapshots();
+  CollectionReference ref = FirebaseFirestore.instance.collection('user');
+  final editController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,10 +61,41 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
                         } else if (snapshot.hasError) {
                           return Text('Error has occurd in the data');
                         }
+
                         return Card(
                           child: ListTile(
                             title: Text(
                                 snapshot.data!.docs[index]['title'].toString()),
+                            subtitle: Text(
+                                snapshot.data!.docs[index]['id'].toString()),
+                            trailing: PopupMenuButton(
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                    child: ListTile(
+                                  onTap: () {
+                                    String title = snapshot
+                                        .data!.docs[index]['title']
+                                        .toString();
+                                    String id = snapshot.data!.docs[index]['id']
+                                        .toString();
+                                    showMyDialog(title, id);
+                                    print('main edit hoon');
+                                  },
+                                  leading: Icon(Icons.edit),
+                                  title: Text('Edit'),
+                                )),
+                                PopupMenuItem(
+                                    child: ListTile(
+                                  onTap: () {
+                                    String id = snapshot.data!.docs[index]['id']
+                                        .toString();
+                                    ref.doc(id).delete();
+                                  },
+                                  leading: Icon(Icons.delete),
+                                  title: Text('Delete'),
+                                ))
+                              ],
+                            ),
                           ),
                         );
                       }),
@@ -89,5 +122,39 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> showMyDialog(String title, String id) async {
+    editController.text = title;
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Update'),
+            content: TextField(
+              controller: editController,
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Cancel')),
+              TextButton(
+                  onPressed: () {
+                    ref
+                        .doc(id)
+                        .update({'title': editController.text.toString()}).then(
+                            (value) {
+                      Utils().toastMessage('Data Update');
+                    }).onError((error, stackTrace) {
+                      Utils().toastMessage(error.toString());
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: Text('Ok'))
+            ],
+          );
+        });
   }
 }
