@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_project1/Screen/Authentication/loginScreen.dart';
 import 'package:my_project1/Screen/Post/post_screen.dart';
+import 'package:my_project1/UploadImage/image_upload.dart';
 import 'package:my_project1/fireStore/fireStore_list.dart';
 
 class SplashServices {
@@ -14,14 +15,12 @@ class SplashServices {
 
     if (user != null) {
       Timer(
-          Duration(seconds: 3),
-          () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const FireStoreScreen())));
+          const Duration(seconds: 3),
+          () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const Image_upload())));
     } else {
       Timer(
-          Duration(seconds: 3),
+          const Duration(seconds: 3),
           () => Navigator.push(
               context, MaterialPageRoute(builder: (context) => LoginScreen())));
     }
