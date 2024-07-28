@@ -18,7 +18,7 @@ class _Image_uploadState extends State<Image_upload> {
   File? _image;
 
   final picker = ImagePicker();
-  final databaseRef = FirebaseDatabase.instance.ref('Table');
+  final databaseRef = FirebaseDatabase.instance.ref('Node');
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
   Future getImage() async {
@@ -52,14 +52,31 @@ class _Image_uploadState extends State<Image_upload> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: _image != null
                       ? Image.file(_image!.absolute)
-                      : Icon(Icons.image),
+                      : const Icon(Icons.image),
                 ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            ReUseBtn(btnTitle: 'Upload', ontap: () async {})
+            ReUseBtn(
+                btnTitle: 'Upload',
+                ontap: () async {
+                  firebase_storage.Reference ref =
+                      firebase_storage.FirebaseStorage.instance.ref('/Folder/' +
+                          DateTime.now().microsecondsSinceEpoch.toString());
+                  firebase_storage.UploadTask taskUpload =
+                      ref.putFile(_image!.absolute);
+                  await Future.value(taskUpload).then((value) async {
+                    var imgUrl = await ref.getDownloadURL();
+                    databaseRef
+                        .child(DateTime.now().microsecondsSinceEpoch.toString())
+                        .set({'ImageUrl': imgUrl.toString()});
+                    Utils().toastMessage('Image Uploaded');
+                  }).onError((error, stackTrace) {
+                    Utils().toastMessage(error.toString());
+                  });
+                })
           ],
         ),
       ),
